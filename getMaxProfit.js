@@ -22,28 +22,58 @@ No "shorting"—you must buy before you sell. You may not buy and sell in the sa
 
 
 
-const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
-
 // brute force solution
+
+// const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
+// const getMaxProfit = function(stock) {
+//   let maxProfit = 0;
+//   // go though every price and time
+//   for (let earlierTime = 0; earlierTime < stock.length; earlierTime++) {
+//     let earlierPrice = stock[earlierTime];
+
+//     //go though all the LATER prices
+//     for (let laterTime = earlierTime + 1; laterTime < stock.length; laterTime++) {
+//       let laterPrice = stock[laterTime]
+
+//       // check all the potential profit
+//       let potentialProfit = laterPrice - earlierPrice;
+
+//       // update maxProfit with the higher value
+//       maxProfit = Math.max(maxProfit, potentialProfit);
+//     }
+//   }   
+//   return maxProfit;
+// } 
+
+
+// constant time solution
+
+const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
 const getMaxProfit = function(stock) {
-  let maxProfit = 0;
-  // go though every price and time
-  for (let earlierTime = 0; earlierTime < stock.length; earlierTime++) {
-    let earlierPrice = stock[earlierTime];
+  if (stock.length < 2) {
+    throw new Error ("Getting prfits require at least 2 prices");
+  }
+  let minPrice = stock[0];
+  let maxProfit = stock[1] - stock[0];
 
-    //go though all the LATER prices
-    for (let laterTime = earlierTime + 1; laterTime < stock.length; laterTime++) {
-      let laterPrice = stock[laterTime]
+  for (let i = 1; i < stock.length; i++) {
+    let currentPrice = stock[i];
 
-      // check all the potential profit
-      let potentialProfit = laterPrice - earlierPrice;
+    // check for greatest profit
+    let potentialProfit = currentPrice - minPrice;
 
-      // update maxProfit with the higher value
-      maxProfit = Math.max(maxProfit, potentialProfit);
-    }
-  }   
+    //update maxProfet with greatest value
+    maxProfit = Math.max(maxProfit, potentialProfit);
+
+    // keep track of the lowest price in the stock
+    minPrice = Math.min(minPrice, currentPrice);
+
+  }
   return maxProfit;
-} 
+}  
 
 getMaxProfit(stockPricesYesterday);
+
+
+
 

@@ -55,19 +55,17 @@ makeChange(2) === 2
 // 73682
 
 
-const values = [1, 2, 5, 10, 20, 50, 100, 200];
-
 const makeChange = function(total) {
+	const coins = [1, 2, 5, 10, 20, 50, 100, 200];
 	let count = 0;
-
 	const createChange = (target, tracking) => {
 		if (target === total) {
 			count++; 
 		} 
 		else if (target < total) {
-			for (let i = 0; i < values.length; i++) {
+			for (let i = 0; i < coins.length; i++) {
 				if (i >= tracking) {
-					createChange(values[i] + target, i);
+					createChange(coins[i] + target, i);
 				}
 			}
 		}
@@ -76,7 +74,6 @@ const makeChange = function(total) {
 	console.log(count);
 	return count;
 };
-
 makeChange(200);
 
 

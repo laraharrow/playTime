@@ -33,6 +33,9 @@ getProductsOfAllIntsExceptAtIndex = function(numbers) {
 	} 
 		
 	/* naive solution
+		itarate to numbers getting the product of all elements before idx
+		store it on the products array
+	for (let i = 0; i < numbers.length; i++) {
 		// create a variable to store product
 		let prod = 1;
 		// inner for loop

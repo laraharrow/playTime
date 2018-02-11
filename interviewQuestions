@@ -1,0 +1,60 @@
+1) Toy problem: Given an array where all integers except one are repeated once, find the singleton. Optimize time and space complexity.
+2) Toy problem: Write the algorithm for finding the square root of a number (without built in sqrt function, of course).
+3) Toy problem: Consider an array of integers where each integer indicates how many spaces (indices) you can move to the left or right. But there is no wrapping, which means that if the value is 4 at index 2, moving left (i.e., towards the 0th index) is not an option. Given an array of integers and the starting index in that array (i.e., where you will start), return true if you are able to reach an element with value 0 and false otherwise.
+4) Toy problem: Let's play a game where we start with an arbitrary integer and we each take turns subtracting a perfect square from it. The person who can no longer subtract a perfect square loses. What is the algorithm I can use to make the optimal move?
+5) Domain knowledge: Describe the lifecycle methods in React and provide a couple of examples of when you would use each.
+6) Design: Design a command line mp3 player app and discuss the implications of being CPU bound, memory bound and I/O bound. How would you overcome each type of constraint?
+7) OO (also algorithms and data structures): In order to track possible malicious website behaviour, design a class that logs incoming IP addresses and provides the facilities to quickly query for the top N IP addresses (top = making the most requests). Discuss and optimize space and time complexity for each method. Discuss trade-offs made -- for example, which methods would you add complexity to in order to reduce the complexity of another? For a given time complexity, are there opportunities to simplify the approach with different choices in data structures?
+8) Here's a Rectangle class, use inheritance to create a Square class
+9) a BUNCH of array intersection problems. i.e. using one or more hash tables to identify either intersections between arrays or differences between arrays
+10) the most fun one so far...design a minesweeper board if you're given the size, N, (it's a square) and the number of bombs to place. Bombs must be placed randomly and 0 <= bomb count <= N * N. Optimize for space and time.
+11) (for thesis) why did you decide to use a SOA?
+12) Deck of Cards
+ 
+ Card - two properties
+  Suit -> {Diamond, Heart, Club, Spade}
+  Value -> {Ace, 2-10, Jack, Queen, King}
+  
+ Deck - a collection of 52 cards
+  function deal() {
+    // return/remove the first/head card in the deck
+  }
+  
+  function returnCard(c) {
+    // add the card to the bottom of the deck
+  }
+  
+  function shuffle() {
+    // given a deck order, we want to permute that order in an unbiased way
+  }
+  
+  1. What do your models/classes look like for the Card and Deck?
+  2. What data structure would you use for the collection of cards?
+  3. Let's implement the Deck
+
+13) Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+
+14) (1.5 hr pair programming session) Implement search autocomplete for a .csv file with over 7M Wikipedia page titles
+
+15) A happy number is defined as a positive number that can be formed by adding two cubes in at least two distinct ways (i.e. x = a^3 + b^3 && x = c^3 + d^3). Given a number n, print all happy numbers up to and including n. (this one was hard and i got lots of help from my interviewer)
+
+16) You have an array of strings where the strings represent file paths (ex: 'a/b/c.js') of files OR directories that have been changed and you need to git add them. You want to add these files in the most efficient way (i.e. if you have a/b/c.js, a/b/d.js, and a/e.js, you add just a/). You ALSO have a list of files/directories that you DON'T want to change. Return a list of the minimum paths you can use to add. Ex: add [a/b/c.js, a/b/d.js, z/], don't add [a/b/e.js]. Output is [a/b/c.js, a/b/d.js, z/].
+
+17) Implement a calculator where the input is a string representation of operations (Ex: '1+2-3*4'). Handle order of operations. Bonus: handle parenthesis.
+
+18) https://leetcode.com/problems/generate-parentheses/description/
+
+19) Lots of async problems...how do you handle JS async calls? Know promises and .then everything lol
+
+20) Given a string, return if any permutation of that string forms a palindrome
+
+21) You have a class that tracks clicks on a website. You have a method on this class logHits() that is called every time someone clicks a link. You also have a method logHitsInLast5Minutes() that returns the number of hits in the last 5 minutes from the time logHitsInLast5Minutes was called. Implement these 2 functions.
+
+22) For the above question and a few others I've had, talk about memory limits. How many bits make up an int? String? Array of strings? array of ints? array of bools? when to use a bit vector? 
+
+23) Implement a roomba function. You have a roomba that you drop in a room. It has 3 commands: left(), right(), and move(). You don't know anything about the room (i.e. no input matrix). Write a function for the roomba to use to clean the entire room
+
+
+memory hardrive cpu
+
+database differences

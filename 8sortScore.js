@@ -1,8 +1,6 @@
 /*
-
 Given an unsorted array with all scores of a game, 
 return a sorted array of scores in less than O(n log n).
-
 */
 
 let unsortedScore = [37, 89, 53, 0, 41, 91, 53];
@@ -37,5 +35,3 @@ const sortScore = function(scores, max) {
 }
 
 sortScore(unsortedScore, highestPossobleScore);
-
-

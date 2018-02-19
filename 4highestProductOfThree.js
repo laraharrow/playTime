@@ -1,11 +1,11 @@
 /*
-
 Given an array of integers, find the highest product you can get from three of the integers.
-
 The input arrayOfInts will always have at least three integers.
-
 */
 
+/*
+notes: with questions like that be aware of the possibilities with negative numbers
+*/
 const arrayOfInts = [1, 10, -5, 1, -100, -6];// [3, 5, 7, 2, 9, 12, 6];
 
 const highestProductOfThree = function(int) {
@@ -14,13 +14,31 @@ const highestProductOfThree = function(int) {
   let negativeStore = []
   // add int[0] to array
   positiveStore.push(int[0]);
-  
+  // check in int[0] can be added to negativeStore
   if (int[0] < 0) {
   	negativeStore.push(int[0]);
   }
-  console.log('before loop', positiveStore, '||', negativeStore);
-  // itarate throu the array starting at 1
+  // itarate throu int starting at index 1
   for (let i = 1; i < int.length; i++) {
+		
+		// check if positiveStore value is less or equal than the elem at index in int
+		if (positiveStore[0] <= int[i]) {
+			// use splice to add new val before array[0]
+			positiveStore.splice(0, 0, int[i]);
+		// else if positiveStore[1] exists and if its less then int[i]
+		} else if (positiveStore[1] && positiveStore[1] <= int[i]) {
+			// use splice to add new val before array[1]
+			positiveStore.splice(1, 0, int[i]);
+		// else if array[2] exists and if its less then
+		}	 else if (positiveStore[2] && positiveStore[2] <= int[i]) {
+			// use splice to add new val before array[1]
+			positiveStore.splice(2, 0, int[i]);
+		}	
+		// use splice to remove all lements to keep positiveStore.length = 3
+		if (positiveStore.length > 3) {
+			positiveStore.splice(3);
+		}	
+			
 		// check if element is negative
 		if (int[i] < 0) {
 			// create var to store 2 lower values
@@ -50,31 +68,8 @@ const highestProductOfThree = function(int) {
 			negativeStore[0] = positionZero;
 			negativeStore[1] = positionOne;
 		// in case int element is positive	
-		}
-		// for any value of int
-		if (int[i]) {
-			// check if array[0] exists and if its less then new value
-			if (positiveStore[0] < int[i]) {
-				// use splice to add new val before array[0]
-				console.log('before splice ', positiveStore);
-				positiveStore.splice(0, 0, int[i]);
-				console.log('after splice ', positiveStore);
-			// else if arra[1] exists and if its  less then
-			} else if (positiveStore[1] && positiveStore[1] < int[i]) {
-				// use splice to add new val before array[1]
-				positiveStore.splice(0, 0, int[i]);
-			// else if array[2] exists and if its less then
-			}	 else if (positiveStore[2] && positiveStore[2] < int[i]) {
-				// use splice to add new val before array[1]
-				positiveStore.splice(0, 0, int[i]);
-			}	
-			// use splice to remove all lements to keep positiveStore.length = 3
-			if (positiveStore.length > 3) {
-				positiveStore.splice(3);
-			}	
-		}			
+		}		
   }	
-  console.log('after loop', positiveStore, '||', negativeStore);
   let negativeProduct = 0;
   let positiveProduct = 0;
   let product = 0;
@@ -92,9 +87,7 @@ const highestProductOfThree = function(int) {
 
 highestProductOfThree(arrayOfInts);
 
-var foo = [1];
-foo.splice(0, 0, 2);
-console.log(foo);
+
 
 
 

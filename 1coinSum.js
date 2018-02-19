@@ -11,18 +11,35 @@ In England the currency is made up of pound, £, and pence, p, and there are eig
 £2 (200p)
 
 It is possible to make £2 in the following way:
-
 1 * £1 + 1 * 50p + 2 * 20p + 1 * 5p + 1 * 2p + 3 * 1p
 How many different ways can £2 be made using any number of coins?
-
 example usage of `makeChange`:
-
-// aka, there's only one way to make 1p. that's with a single 1p piece
+aka, there's only one way to make 1p. that's with a single 1p piece
 makeChange(1) === 1
-// aka, there's only two ways to make 2p. that's with two, 1p pieces or with a single 2p piece
+aka, there's only two ways to make 2p. that's with two, 1p pieces or with a single 2p piece
 makeChange(2) === 2
 */
 
+const makeChange = function(total) {
+	const coins = [1, 2, 5, 10, 20, 50, 100, 200];
+	let count = 0;
+	const createChange = (target, tracking) => {
+		if (target === total) {
+			count++; 
+		} 
+		else if (target < total) {
+			for (let i = 0; i < coins.length; i++) {
+				if (i >= tracking) {
+					createChange(coins[i] + target, i);
+				}
+			}
+		}
+	}	
+	createChange(0, 0);
+	console.log(count);
+	return count;
+};
+makeChange(200);
 
 // const makeChange = function(total) {
 	
@@ -55,26 +72,7 @@ makeChange(2) === 2
 // 73682
 
 
-const makeChange = function(total) {
-	const coins = [1, 2, 5, 10, 20, 50, 100, 200];
-	let count = 0;
-	const createChange = (target, tracking) => {
-		if (target === total) {
-			count++; 
-		} 
-		else if (target < total) {
-			for (let i = 0; i < coins.length; i++) {
-				if (i >= tracking) {
-					createChange(coins[i] + target, i);
-				}
-			}
-		}
-	}	
-	createChange(0, 0);
-	console.log(count);
-	return count;
-};
-makeChange(200);
+
 
 
 

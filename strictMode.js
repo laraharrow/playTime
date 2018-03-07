@@ -35,7 +35,7 @@ myFunc(1, 2, 3);
 // the second value of "a" as a reassignment.
 
 // 3- 
-'use strict'
+// 'use strict'
 
 delete Object.prototype;
 
@@ -44,6 +44,32 @@ delete Object.prototype;
 // that this code won't work.
 
 
+// if the code bellow was using 'use strict' an error alert would have apeared to
+// keep the code on best practice and declaring a variable with out the var-let
+// or const keywork is not best practice. It creates a global variable that can be 
+// hard to control.
+
+(function() {
+  var x = y = 200;
+})();
+
+console.log('y: ', y); // => y: 200
+console.log('x: ', x); // => ReferenceError: x is not defined
+
+// the interpreter will read this code like so:
+var y;
+
+(function() {
+  var x;
+  x = y;
+  y = 200;
+})();
+
+// The js compailer hoists and creates the variable x at the top of the IIFE scope
+// and y sisnce is not declated with the var keyword becames a global variable.
+// Therefor when the interpreter runs this code y is associated to the value 200 
+// and since its a global scope the console.log statement can access it but x is a
+// inner variable of the IIFE scope not available out side of its scope.
 
 
 

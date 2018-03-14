@@ -171,6 +171,45 @@ getTotal();
 // console.log(total); => Error (this was declared with let)
 
 
+var x = 10;
+ 
+function y() {
+    x = 100;
+    return;
+    function x() {}
+}
+ 
+y();
+ 
+console.log(x); // => 10
+
+// hoisting is why the x = 10 on the console.log
+// on a first glass you would expect that x gat resign to 100
+// when the function y is called since x inside of y doest have
+// a var or let to define it locally makig x a reference to a 
+// global variable ans since the function x happens after the return
+// value it i ignored since nothing happends after a return value of a function.
+
+// BUT because of hoisting somehting different happens, remember that
+// variable and functions get hoisted to the top of its scopes
+// so when js compailer is runnig it hoists the function x to the top of
+// the scope of the function y and therefor x becames a inner variable of 
+// function y.
+
+// the code would look like this after hoisting:
+var x = 10;
+ 
+function y() {
+    function x() {}
+    x = 100;
+    return;
+    // function x() {}
+}
+ 
+y();
+ 
+console.log(x); 
+
 
 
 

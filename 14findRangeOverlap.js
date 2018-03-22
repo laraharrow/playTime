@@ -10,20 +10,63 @@ As with the example above, love rectangles are always "straight" and never "diag
 
 They are defined as objects ↴ like this:
 
-  var myRectangle = {
+var myRectangle1 = {
 
-    // coordinates of bottom-left corner
-    leftX: 1,
-    bottomY: 1,
+  // coordinates of bottom-left corner
+  leftX: 8,
+  bottomY: 8,
 
-    // width and height
-    width: 6,
-    height: 3,
+  // width and height
+  width: 3,
+  height: 2,
 
 };
 
+
+var myRectangle2 = {
+
+  // coordinates of bottom-left corner
+  leftX: 1,
+  bottomY: 1,
+
+  // width and height
+  width: 6,
+  height: 5,
+
+};
 Your output rectangle should use this format as well.
 */
+
+// subproble, compare each line separetely first.
+const findLineOverlap = function(p1, l1, p2, l2) {
+  // heiest value between start points
+  let highestStartPoint = Math.max(p1, p2);
+  //
+  let lowestEndPoint = Math.min(p1 + l1, p2 + l2);
+
+  return highestStartPoint >= lowestEndPoint
+    ? { startPoint: null, overlapLength: null }
+    : { startPoint: highestStartPoint, overlapLength: lowestEndPoint - highestStartPoint };
+};
+
+const findRectangularOverlap = function(r1, r2) {
+  let xOverlap = findLineOverlap(r1.leftX, r1.width, r2.leftX, r2.width);
+  let yOverlap = findLineOverlap(r1.bottomY, r1.height, r2.bottomY, r2.height);
+
+  return !xOverlap.overlap || !yOverlap.overlap
+    ? {
+        leftX: null,
+        bottomY: null,
+        width: null,
+        height: null
+      }
+    : {
+        leftX: xOverlap.startPoint,
+        bottomY: yOverlap.startPoint,
+        width: xOverlap.overlapLength,
+        height: yOverlap.overlapLength
+      };
+};
 
 /*
 SOLUTION
@@ -53,17 +96,17 @@ What are the possible cases for how these ranges might overlap or not overlap? D
 There are four relevant cases:
 
 1) The ranges partially overlap:
-
 Two horizontal parallel lines. The right half of the top line overlaps the left half of the bottom line.
+
 2) One range is completely contained in the other:
-
 Two horizontal parallel lines. The bottom line is longer than the top line and extends farther out to the left and right.
+
 3) The ranges don't overlap:
-
 Two horizontal parallel lines. The right end of the bottom line is to the left of the left end of the top line.
-4) The ranges "touch" at a single point:
 
+4) The ranges "touch" at a single point:
 Two horizontal parallel lines. The right end of the bottom line is directly below the left end of the top line.
+
 Let's start with the first 2 cases. How do we compute the overlapping range?
 
 One of our ranges starts "further to the right" than the other. We don't know ahead of time which one it is, but we can check the starting points of each range to see which one has the highestStartPoint. That highestStartPoint is always the left-hand side of the overlap, if there is one.
@@ -144,45 +187,45 @@ So we write a helper function findRangeOverlap() that can be used to find both t
 */
 
 function findRangeOverlap(point1, length1, point2, length2) {
-    // find the highest start point and lowest end point.
-    // the highest ("rightmost" or "upmost") start point is
-    // the start point of the overlap.
-    // the lowest end point is the end point of the overlap.
-    var highestStartPoint = Math.max(point1, point2);
-    var lowestEndPoint = Math.min(point1 + length1, point2 + length2);
+  // find the highest start point and lowest end point.
+  // the highest ("rightmost" or "upmost") start point is
+  // the start point of the overlap.
+  // the lowest end point is the end point of the overlap.
+  var highestStartPoint = Math.max(point1, point2);
+  var lowestEndPoint = Math.min(point1 + length1, point2 + length2);
 
-    // return null overlap if there is no overlap
-    if (highestStartPoint >= lowestEndPoint) {
-        return { startPoint: null, overlapLength: null };
-    }
+  // return null overlap if there is no overlap
+  if (highestStartPoint >= lowestEndPoint) {
+    return { startPoint: null, overlapLength: null };
+  }
 
-    // compute the overlap length
-    var overlapLength = lowestEndPoint - highestStartPoint;
+  // compute the overlap length
+  var overlapLength = lowestEndPoint - highestStartPoint;
 
-    return { startPoint: highestStartPoint, overlapLength: overlapLength };
+  return { startPoint: highestStartPoint, overlapLength: overlapLength };
 }
 
 function findRectangularOverlap(rect1, rect2) {
-    // get the x and y overlap points and lengths
-    var xOverlap = findRangeOverlap(rect1.leftX, rect1.width, rect2.leftX, rect2.width);
-    var yOverlap = findRangeOverlap(rect1.bottomY, rect1.height, rect2.bottomY, rect2.height);
+  // get the x and y overlap points and lengths
+  var xOverlap = findRangeOverlap(rect1.leftX, rect1.width, rect2.leftX, rect2.width);
+  var yOverlap = findRangeOverlap(rect1.bottomY, rect1.height, rect2.bottomY, rect2.height);
 
-    // return null rectangle if there is no overlap
-    if (!xOverlap.overlapLength || !yOverlap.overlapLength) {
-        return {
-            leftX: null,
-            bottomY: null,
-            width: null,
-            height: null
-        };
-    }
-
+  // return null rectangle if there is no overlap
+  if (!xOverlap.overlapLength || !yOverlap.overlapLength) {
     return {
-        leftX: xOverlap.startPoint,
-        bottomY: yOverlap.startPoint,
-        width: xOverlap.overlapLength,
-        height: yOverlap.overlapLength
+      leftX: null,
+      bottomY: null,
+      width: null,
+      height: null
     };
+  }
+
+  return {
+    leftX: xOverlap.startPoint,
+    bottomY: yOverlap.startPoint,
+    width: xOverlap.overlapLength,
+    height: yOverlap.overlapLength
+  };
 }
 
 /*

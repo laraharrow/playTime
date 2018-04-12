@@ -20,41 +20,59 @@ BinaryTreeNode.prototype.insertRight = function(value) {
     return this.right;
 };
 
+// when the largest element is the leaf end element to the right
+         ( 5 )
+        /     \
+      (4)     (8)
+     /  \     /  \
+   (1)  (4) (7)  (9)
+
+// when the largest element has a subtree to the left 
+         ( 5 )
+        /     \
+      (3)     (8)
+     /  \     /  \
+   (1)  (4) (7)  (12)
+                 /
+               (10)
+               /  \
+             (9)  (11)
+
 */
+const largestNode = function(rootNode) {
+  if (!rootNode) {
+    throw new Error('Tree must have at least one node');
+  }
 
+  let node = rootNode;
+  while (node) {
+    if (!node.right) {
+      return node.value;
+    }
+    node = node.right;
+  }
+};
 
+const secondLargestNode = function(rootNode) {
+  // tree must have at least 2 nodes to be able to find the second to last largest node
+  if (!rootNode || (!rootNode.left || !rootNode.right)) {
+    throw new Error('Tree must have at least 2 nodes');
+  }
 
+  // if largest node with left side subtree
+  if (rootNode.left && !rootNode.right) {
+    return largestNode(rootNode.left);
+  }
 
-
-
-
-
-
-
+  // if parent of largest doesn't have left subtree
+  if (rootNode.right && !rootNode.right.left && !rootNode.right.left) {
+    return rootNode.value;
+  }
+};
 
 /*
 
 SOLUTION
-
-Write a function to find the 2nd largest element in a binary search tree. ↴
-
-Here's a sample binary tree node class:
-
-  function BinaryTreeNode(value) {
-    this.value = value;
-    this.left  = null;
-    this.right = null;
-}
-
-BinaryTreeNode.prototype.insertLeft = function(value) {
-    this.left = new BinaryTreeNode(value);
-    return this.left;
-};
-
-BinaryTreeNode.prototype.insertRight = function(value) {
-    this.right = new BinaryTreeNode(value);
-    return this.right;
-};
 
 Gotchas
 Our first thought might be to do an in-order traversal of the BST ↴ and return the second-to-last item. This means looking at every node in the BST. That would take O(n)O(n) time and O(h)O(h) space, where hh is the max height of the tree (which is lg(n)lg(n) if the tree is balanced, ↴ but could be as much as nn if not).
@@ -131,39 +149,40 @@ So let's try sticking with this. How do we find the second largest when the larg
 It's the largest item in that left subtree! Whoa, we freaking just wrote a function for finding the largest element in a tree. We could use that here!
 
 How would we code this up?
+*/
 
-  function findLargest(rootNode) {
-    if (!rootNode) {
-        throw new Error('Tree must have at least 1 node');
-    }
-    if (rootNode.right) {
-        return findLargest(rootNode.right);
-    }
-    return rootNode.value;
+function findLargest(rootNode) {
+  if (!rootNode) {
+    throw new Error('Tree must have at least 1 node');
+  }
+  if (rootNode.right) {
+    return findLargest(rootNode.right);
+  }
+  return rootNode.value;
 }
 
 function findSecondLargest(rootNode) {
-    if (!rootNode || (!rootNode.left && !rootNode.right)) {
-        throw new Error('Tree must have at least 2 nodes');
-    }
+  if (!rootNode || (!rootNode.left && !rootNode.right)) {
+    throw new Error('Tree must have at least 2 nodes');
+  }
 
-    // case: we're currently at largest, and largest has a left subtree,
-    // so 2nd largest is largest in said subtree
-    if (rootNode.left && !rootNode.right) {
-        return findLargest(rootNode.left);
-    }
+  // case: we're currently at largest, and largest has a left subtree,
+  // so 2nd largest is largest in said subtree
+  if (rootNode.left && !rootNode.right) {
+    return findLargest(rootNode.left);
+  }
 
-    // case: we're at parent of largest, and largest has no left subtree,
-    // so 2nd largest must be current node
-    if (rootNode.right &&
-            !rootNode.right.left &&
-            !rootNode.right.right) {
-        return rootNode.value;
-    }
+  // case: we're at parent of largest, and largest has no left subtree,
+  // so 2nd largest must be current node
+  if (rootNode.right && !rootNode.right.left && !rootNode.right.right) {
+    return rootNode.value;
+  }
 
-    // otherwise: step right
-    return findSecondLargest(rootNode.right);
+  // otherwise: step right
+  return findSecondLargest(rootNode.right);
 }
+
+/*
 
 Okay awesome. This'll work. It'll take O(h)O(h) time (where hh is the height of the tree) and O(h)O(h) space.
 
@@ -174,12 +193,12 @@ We start with a function for getting the largest value. The largest value is sim
 
 */
 
-  function findLargest(rootNode) {
-    var current = rootNode;
-    while (current) {
-        if (!current.right) return current.value;
-        current = current.right;
-    }
+function findLargest(rootNode) {
+  var current = rootNode;
+  while (current) {
+    if (!current.right) return current.value;
+    current = current.right;
+  }
 }
 
 /*
@@ -193,38 +212,35 @@ Else, we have a right subtree with more than one element, so the largest and sec
 */
 
 function findLargest(rootNode) {
-    var current = rootNode;
-    while (current) {
-        if (!current.right) return current.value;
-        current = current.right;
-    }
+  var current = rootNode;
+  while (current) {
+    if (!current.right) return current.value;
+    current = current.right;
+  }
 }
 
 function findSecondLargest(rootNode) {
-    if (!rootNode || (!rootNode.left && !rootNode.right)) {
-        throw new Error('Tree must have at least 2 nodes');
+  if (!rootNode || (!rootNode.left && !rootNode.right)) {
+    throw new Error('Tree must have at least 2 nodes');
+  }
+
+  var current = rootNode;
+
+  while (current) {
+    // case: current is largest and has a left subtree
+    // 2nd largest is the largest in that subtree
+    if (current.left && !current.right) {
+      return findLargest(current.left);
     }
 
-    var current = rootNode;
-
-    while (current) {
-
-        // case: current is largest and has a left subtree
-        // 2nd largest is the largest in that subtree
-        if (current.left && !current.right) {
-            return findLargest(current.left);
-        }
-
-        // case: current is parent of largest, and largest has no children,
-        // so current is 2nd largest
-        if (current.right &&
-                !current.right.left &&
-                !current.right.right) {
-            return current.value;
-        }
-
-        current = current.right;
+    // case: current is parent of largest, and largest has no children,
+    // so current is 2nd largest
+    if (current.right && !current.right.left && !current.right.right) {
+      return current.value;
     }
+
+    current = current.right;
+  }
 }
 
 /*
@@ -253,4 +269,3 @@ Whenever a problem is starting to feel complicated, try breaking it down into ca
 
 It can be really helpful to actually draw out sample inputs for those cases. This'll keep your thinking organized and also help get your interviewer on the same page.
 */
-

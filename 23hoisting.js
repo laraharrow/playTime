@@ -10,7 +10,8 @@ function logIt() {
 logIt();
 
 /*
-This will return undifine, because of hoisting. When the iterpreter parser this code the code inside the function would have the declaration of text above the console.log statement, but not the assignament, there for when the interpreter comes around to compile the code it will have the text declaration before it gets called inside the consolo.log so it will return undefin and then it will update text to the vlue of 'inside'.
+This will return undifine, because of hoisting. When the iterpreter parser this code the code inside the function would have the declaration of text above the console.log statement, but not the assignament, there for when the interpreter comes around to compile the code it will have the text declaration before it gets called inside the consolo.log so it will return undefin and then it will update text to the value of 'inside'.
+This just happens when using var if you change that to const or let JS interpreter will return an error.
 */
 
 /*
